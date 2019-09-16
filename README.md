@@ -1,2 +1,2 @@
 # MyThesiss
-AI Jump ability calculationm
+AI Jump ability calculation
