@@ -33,8 +33,6 @@ private:
 
 	virtual void OnPossess(APawn* Pawn) override;
 
-	int32 CurrentJumpPoint = 0;
-
 public:
 	AAI_Jump_Controller();
 
@@ -42,5 +40,6 @@ public:
 	FORCEINLINE UBlackboardComponent* GetBlackboardComponent() const { return BlackboardComp; };
 	FORCEINLINE TArray<AActor*> GetJumpPoints() const { return JumpPoints; };
 
+	int32 CurrentJumpPoint = 0;
 
 };
