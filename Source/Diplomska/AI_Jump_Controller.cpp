@@ -7,6 +7,7 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BehaviorTree.h"
+#include "Behaviortree/Blackboard/BlackboardKeyAllTypes.h"
 #include "Kismet/GameplayStatics.h"
 
 AAI_Jump_Controller::AAI_Jump_Controller()
@@ -25,12 +26,12 @@ AAI_Jump_Controller::AAI_Jump_Controller()
 
 void AAI_Jump_Controller::OnPossess(APawn * Pawn)
 {
-	Super::Possess(Pawn);
+	Super::OnPossess(Pawn);
 
 	/*Get reference to the character*/
 	AAI_Jump_Character* AI_Character = Cast<AAI_Jump_Character>(Pawn);
 
-	if (AI_Character)
+	if (AI_Character && AI_Character->BehaviorTree)
 	{
 		if (AI_Character->BehaviorTree->BlackboardAsset)
 		{
