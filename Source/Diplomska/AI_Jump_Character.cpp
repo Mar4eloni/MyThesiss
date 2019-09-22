@@ -11,6 +11,12 @@ AAI_Jump_Character::AAI_Jump_Character()
 
 }
 
+void AAI_Jump_Character::GetPerceptionLocRot_Implementation(FVector& OutLocation, FRotator& OutRotation) const
+{
+	OutLocation = GetActorLocation() + FVector(0.0f, 0.0f, 50.0f);
+	OutRotation = GetActirRotation();
+}
+
 // Called when the game starts or when spawned
 void AAI_Jump_Character::BeginPlay()
 {
@@ -30,5 +36,10 @@ void AAI_Jump_Character::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AAI_Jump_Character::GetActorEyesViewPoint(FVector& Location, FRotator& Rotation) const
+{
+	GetPerceptionLocRot(Location, Rotation);
 }
 
