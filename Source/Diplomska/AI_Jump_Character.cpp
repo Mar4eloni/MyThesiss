@@ -14,7 +14,7 @@ AAI_Jump_Character::AAI_Jump_Character()
 void AAI_Jump_Character::GetPerceptionLocRot_Implementation(FVector& OutLocation, FRotator& OutRotation) const
 {
 	OutLocation = GetActorLocation() + FVector(0.0f, 0.0f, 50.0f);
-	OutRotation = GetActirRotation();
+	OutRotation = GetActorRotation();
 }
 
 // Called when the game starts or when spawned

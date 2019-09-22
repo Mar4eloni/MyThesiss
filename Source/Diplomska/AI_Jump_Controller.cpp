@@ -9,6 +9,8 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "Behaviortree/Blackboard/BlackboardKeyAllTypes.h"
 #include "Kismet/GameplayStatics.h"
+#include "Perception/AIPerceptionComponent.h"
+#include "Perception/AISenseConfig_Sight.h"
 
 AAI_Jump_Controller::AAI_Jump_Controller()
 {
@@ -20,6 +22,25 @@ AAI_Jump_Controller::AAI_Jump_Controller()
 	/*Initialize Blackboard Keys*/
 	PlayerKey = "Target";
 	LocationToGoKey = "LocationToGo";
+
+	/*Initialize perception*/
+	PerceptionComp = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("PerceptionComp"));
+	SightConfing = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("SightConfig"));
+
+	if (PerceptionComp && SightConfing)
+	{
+		PerceptionComp->ConfigureSense(*SightConfing);
+		PerceptionComp->SetDominantSense(SightConfing->GetSenseImplementation());
+
+		SightConfing->SightRadius = 2000.0f;
+		SightConfing->LoseSightRadius = 2200.0f;
+		SightConfing->PeripheralVisionAngleDegrees = 90.0;
+
+		SightConfing->DetectionByAffiliation.bDetectEnemies = true;
+		SightConfing->DetectionByAffiliation.bDetectFriendlies = true;
+		SightConfing->DetectionByAffiliation.bDetectNeutrals = true;
+
+	}
 
 	CurrentJumpPoint = 0;
 }

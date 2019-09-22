@@ -36,6 +36,13 @@ private:
 public:
 	AAI_Jump_Controller();
 
+	UPROPERTY(VisibleAnywhere, Category = "Perception")
+		class UAIPerceptionComponent* PerceptionComp;
+
+	UPROPERTY(VisibleAnywhere, Category = "Perception")
+		class UAISenseConfig_Sight* SightConfing;
+
+
 	/* Getter functions */
 	FORCEINLINE UBlackboardComponent* GetBlackboardComponent() const { return BlackboardComp; };
 	FORCEINLINE TArray<AActor*> GetJumpPoints() const { return JumpPoints; };

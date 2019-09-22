@@ -16,28 +16,34 @@ EBTNodeResult::Type UBTSelectJumpPoint::ExecuteTask(UBehaviorTreeComponent& Owne
 	{
 		/*Get Blacboard Component*/
 		UBlackboardComponent* BlacboardComp = AIController->GetBlackboardComponent();
-		 
+
 		AAI_Jump_Point* CurrentPoint = Cast<AAI_Jump_Point>(BlacboardComp->GetValueAsObject("LocationToGo"));
 
 		TArray<AActor*> AvailableJumpPoints = AIController->GetJumpPoints();
 
 		AAI_Jump_Point* NextJumpPoint = nullptr;
 
-		if(AIController->CurrentJumpPoint != AvailableJumpPoints.Num() - 1)
+		if (AvailableJumpPoints.Num() != 0)
 		{
-			NextJumpPoint = Cast<AAI_Jump_Point>(AvailableJumpPoints[++AIController->CurrentJumpPoint]);
+			if (AIController->CurrentJumpPoint != AvailableJumpPoints.Num() - 1)
+			{
+				NextJumpPoint = Cast<AAI_Jump_Point>(AvailableJumpPoints[++AIController->CurrentJumpPoint]);
+			}
+			else // if there are no more jump points go to start
+			{
+				NextJumpPoint = Cast<AAI_Jump_Point>(AvailableJumpPoints[0]);
+				AIController->CurrentJumpPoint = 0;
+			}
+
+			BlacboardComp->SetValueAsObject("LocationToGo", NextJumpPoint);
+			return EBTNodeResult::Succeeded;
 		}
-		else // if there are no more jump points go to start
+		else
 		{
-			NextJumpPoint = Cast<AAI_Jump_Point>(AvailableJumpPoints[0]);
-			AIController->CurrentJumpPoint = 0;
+			return EBTNodeResult::Failed;
 		}
-
-		BlacboardComp->SetValueAsObject("LocationToGo", NextJumpPoint);
-		return EBTNodeResult::Succeeded;
-
 	}
-	
+
 	return EBTNodeResult::Failed;
 
 }
