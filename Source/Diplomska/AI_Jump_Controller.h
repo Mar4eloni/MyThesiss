@@ -36,12 +36,18 @@ private:
 public:
 	AAI_Jump_Controller();
 
-	UPROPERTY(VisibleAnywhere, Category = "Perception")
-		class UAIPerceptionComponent* PerceptionComp;
+	virtual void BeginPlay() override;
+
+	virtual FRotator GetControlRotation() const override;
 
 	UPROPERTY(VisibleAnywhere, Category = "Perception")
-		class UAISenseConfig_Sight* SightConfing;
+	class UAIPerceptionComponent* PerceptionComp;
 
+	UPROPERTY(VisibleAnywhere, Category = "Perception")
+	class UAISenseConfig_Sight* SightConfing;
+
+	UFUNCTION()
+	void OnObsticleDetected(TArray<AActor*> DetectedObsticles);
 
 	/* Getter functions */
 	FORCEINLINE UBlackboardComponent* GetBlackboardComponent() const { return BlackboardComp; };

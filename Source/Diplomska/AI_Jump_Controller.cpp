@@ -40,9 +40,36 @@ AAI_Jump_Controller::AAI_Jump_Controller()
 		SightConfing->DetectionByAffiliation.bDetectFriendlies = true;
 		SightConfing->DetectionByAffiliation.bDetectNeutrals = true;
 
+		GetPerceptionComponent()->OnPerceptionUpdated.AddDynamic(this, &AAI_Jump_Controller::OnPawnDetected);
+
 	}
 
 	CurrentJumpPoint = 0;
+}
+
+void AAI_Jump_Controller::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
+FRotator AAI_Jump_Controller::GetControlRotation() const
+{
+	if (GetPawn() == nullptr)
+	{
+		return FRotator(0.0f, 0.0f, 0.0f);
+	}
+	return FRotator(0.0f, GetPawn()->GetActorRotation().Yaw, 0.0f);
+}
+
+void AAI_Jump_Controller::OnObsticleDetected(TArray<AActor*> DetectedObsticles)
+{
+	/*
+		Logika za presmetka i ovozmozuvanje na skok
+		- Start position - pocetna pozicija
+		- End position - krajna destinacija
+		- Apex position - pozicija na najvisoka tocka vo skokot
+		- Dali e uspeshen skokot - dali so variabla
+	*/
 }
 
 void AAI_Jump_Controller::OnPossess(APawn * Pawn)
